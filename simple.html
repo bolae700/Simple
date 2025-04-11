@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOLA - Personal Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@700&family=Space+Grotesk&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A9D8F;
+            --secondary: #E76F51;
+            --accent: #264653;
+            --bg: #F8F9FA;
+        }
+
+        body {
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            width: 200vw;
+            height: 200vh;
+            background: 
+                repeating-linear-gradient(45deg, 
+                    var(--primary) 0 2px, 
+                    transparent 2px 40px),
+                repeating-linear-gradient(-45deg, 
+                    var(--secondary) 0 2px, 
+                    transparent 2px 40px);
+            opacity: 0.1;
+            animation: slide 40s linear infinite;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-title {
+            font-family: 'Kanit', sans-serif;
+            font-size: 3.5rem;
+            color: var(--accent);
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+            letter-spacing: -2px;
+        }
+
+        .main-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .location-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1.5rem auto;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+        }
+
+        .texas-flag {
+            width: 24px;
+            height: 24px;
+            background: 
+                linear-gradient(180deg, 
+                    #002868 0 33%, 
+                    #fff 33% 66%, 
+                    #BF0A30 66% 100%);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .texas-flag::after {
+            content: '★';
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--accent);
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.2);
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-overlay.closing {
+            animation: fadeOut 0.3s forwards;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .modal-content.closing {
+            animation: slideDown 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes slide {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); }
+            to { transform: translate(-50%, -50%); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(-50%, 150%); }
+        }
+
+        @media (max-width: 768px) {
+            .main-card { padding: 2rem; }
+            .main-title { font-size: 2.5rem; }
+            .btn-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="main-card">
+        <h1 class="main-title">BOLA EMAD</h1>
+        
+        <div class="location-tag">
+            <div class="texas-flag"></div>
+            TEXAS, USA
+        </div>
+
+        <div class="btn-container">
+            <button class="action-btn" onclick="showModal('friends')">
+                👥 BEST FRIENDS
+            </button>
+            <button class="action-btn" onclick="showModal('music')">
+                🎵 MUSIC ZONE
+            </button>
+        </div>
+
+        <div class="modal-overlay" id="friendsModal">
+            <div class="modal-content">
+                <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">MY SQUAD</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                    <div style="padding: 1rem; background: #f1faee; border-radius: 8px; text-align: center;">MARK</div>
+                    <div style="padding: 1rem; background: #f1faee; border-radius: 8px; text-align: center;">DOLLY</div>
+                    <div style="padding: 1rem; background: #f1faee; border-radius: 8px; text-align: center;">LEADER</div>
+                    <div style="padding: 1rem; background: #f1faee; border-radius: 8px; text-align: center;">RAMIZ</div>
+                </div>
+                <button class="action-btn" style="margin: 2rem auto 0;" onclick="closeModals()">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="musicModal">
+            <div class="modal-content">
+                <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">FAVORITE MUSIC</h2>
+                <div style="position:relative; padding-bottom:56.25%;">
+                    <iframe 
+                        style="position:absolute; width:100%; height:100%; border-radius:12px; border:none;" 
+                        src="https://www.youtube.com/embed/pCgPSpdDs54" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <button class="action-btn" style="margin: 2rem auto 0;" onclick="closeModals()">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.style.display = 'block';
+            modal.classList.remove('closing');
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.classList.add('closing');
+                modal.querySelector('.modal-content').classList.add('closing');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.classList.remove('closing');
+                    modal.querySelector('.modal-content').classList.remove('closing');
+                }, 400);
+            });
+        }
+
+        window.onclick = function(e) {
+            if(e.target.classList.contains('modal-overlay')) closeModals();
+        }
+    </script>
+</body>
+</html>
